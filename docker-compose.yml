@@ -3,4 +3,5 @@ services:
   mutiwa:
     build: .
     environment:
-      TOKEN: ${BOT_TOKEN}
+      TOKEN: ${TOKEN}
+      IWA: ${IWA}
