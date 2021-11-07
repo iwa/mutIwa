@@ -9,9 +9,10 @@ COPY tsconfig.json /app
 COPY src/ /app
 
 RUN yarn
-RUN yarn tsc
 
 RUN useradd -u 8877 mutiwa
 USER mutiwa
+
+RUN yarn tsc
 
 CMD ["node", "."]
