@@ -29,11 +29,13 @@ export default new class Bot extends Client {
             if (channel[1].isVoice()) return;
 
             if (channel[1].name.startsWith('ticket') || channel[1].id === '897900124452290580') {
-                await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null });
+                await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null })
+                    .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
                 return;
             }
 
-            await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false });
+            await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false })
+                .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
         }
     }
 

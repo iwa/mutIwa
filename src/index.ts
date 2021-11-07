@@ -30,11 +30,13 @@ Bot.on('channelCreate', async (channel) => {
     let iwa = await Bot.fetchIwa();
 
     if (channel.name.startsWith('ticket') || channel.id === '897900124452290580') {
-        await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null });
+        await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null })
+            .catch(err => Bot.log.error(`error while changing perms in ${channel.name} (${channel.id})`, err));
         return;
     }
 
-    await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false });
+    await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false })
+        .catch(err => Bot.log.error(`error while changing perms in ${channel.name} (${channel.id})`, err));
 });
 
 setInterval(async () => {
