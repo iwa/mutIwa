@@ -12,7 +12,7 @@ export default class log {
         return `[${yyyy}/${mm}/${dd} ${hh}:${min}:${ss}]`;
     }
 
-    public static log(m: string, o?: Object) {
+    public static info(m: string, o?: Object) {
         console.log(`${this.getDate()} info : ${m}`);
         if (o)
             console.log(o.toString())

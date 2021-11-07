@@ -25,17 +25,19 @@ export default new class Bot extends Client {
         await guild.channels.fetch();
 
         for (const channel of guild.channels.cache) {
-            if (channel[1].isThread()) return;
-            if (channel[1].isVoice()) return;
+            if (!channel[1].isThread() && !channel[1].isVoice()) {
+                console.log(channel[1].name)
 
-            if (channel[1].name.startsWith('ticket') || channel[1].id === '897900124452290580') {
-                await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null })
-                    .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
-                return;
+                if (channel[1].name.startsWith('ticket') || channel[1].id === '897900124452290580') {
+                    await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null })
+                        .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
+                } else {
+                    await channel[1].permissionOverwrites.edit(this.user, { SEND_MESSAGES: true, SEND_MESSAGES_IN_THREADS: true })
+                        .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
+                    await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false })
+                        .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
+                }
             }
-
-            await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false })
-                .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
         }
     }
 

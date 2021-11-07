@@ -24,7 +24,7 @@ Bot.once('shardReady', async () => {
     for (const guild of guilds) {
         await Bot.muteInGuild(guild[1]);
     }
-    Bot.log.debug('perms updated everywhere');
+    Bot.log.info('perms updated everywhere');
 });
 
 Bot.on('guildCreate', async (guild) => {
@@ -43,6 +43,8 @@ Bot.on('channelCreate', async (channel) => {
         return;
     }
 
+    await channel.permissionOverwrites.edit(Bot.user, { SEND_MESSAGES: true, SEND_MESSAGES_IN_THREADS: true })
+        .catch(err => Bot.log.error(`error while changing perms in ${channel.name} (${channel.id})`, err));
     await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false })
         .catch(err => Bot.log.error(`error while changing perms in ${channel.name} (${channel.id})`, err));
 });
@@ -54,6 +56,7 @@ setInterval(async () => {
     for (const guild of guilds) {
         await Bot.muteInGuild(guild[1]);
     }
+    Bot.log.info('perms updated everywhere');
 }, 3600000);
 
 // Login
