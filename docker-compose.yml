@@ -2,6 +2,7 @@ version: "3.9"
 services:
   mutiwa:
     build: .
+    container_name: mutiwa
     environment:
       TOKEN: ${TOKEN}
       IWA: ${IWA}

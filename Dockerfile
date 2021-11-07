@@ -6,13 +6,12 @@ WORKDIR /app
 COPY package.json /app
 COPY yarn.lock /app
 COPY tsconfig.json /app
-COPY src/ /app
+COPY src /app/src
 
 RUN yarn
+RUN yarn tsc
 
 RUN useradd -u 8877 mutiwa
 USER mutiwa
-
-RUN yarn tsc
 
 CMD ["node", "."]
