@@ -17,6 +17,14 @@ Bot.on('shardResume', async () => await ready());
 Bot.once('shardReady', async () => {
     await ready();
     Bot.log.debug(`logged in as ${Bot.user.username}`);
+
+    await Bot.guilds.fetch();
+    let guilds = Bot.guilds.cache;
+
+    for (const guild of guilds) {
+        await Bot.muteInGuild(guild[1]);
+    }
+    Bot.log.debug('perms updated everywhere');
 });
 
 Bot.on('guildCreate', async (guild) => {
