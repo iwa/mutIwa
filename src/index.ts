@@ -24,9 +24,16 @@ Bot.on('guildCreate', async (guild) => {
 });
 
 Bot.on('channelCreate', async (channel) => {
-    if (channel.name.startsWith('ticket')) return;
+    if (channel.isThread()) return;
+    if (channel.isVoice()) return;
 
     let iwa = await Bot.fetchIwa();
+
+    if (channel.name.startsWith('ticket') || channel.id === '897900124452290580') {
+        await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null });
+        return;
+    }
+
     await channel.permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false });
 });
 

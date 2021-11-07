@@ -26,6 +26,12 @@ export default new class Bot extends Client {
 
         for (const channel of guild.channels.cache) {
             if (channel[1].isThread()) return;
+            if (channel[1].isVoice()) return;
+
+            if (channel[1].name.startsWith('ticket') || channel[1].id === '897900124452290580') {
+                await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null });
+                return;
+            }
 
             await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: false, SEND_MESSAGES_IN_THREADS: false });
         }
