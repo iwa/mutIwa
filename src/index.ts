@@ -11,8 +11,8 @@ process.on('unhandledRejection', async exception => Bot.log.error('node error', 
 // Bot-User related Events
 Bot.on('warn', (warn) => Bot.log.warn(warn));
 Bot.on('shardError', (error) => Bot.log.error('mutIwa error', error));
-Bot.on('shardDisconnect', (event) => Bot.log.debug("mutIwa disconnected", { event: event }));
-Bot.on('shardReconnecting', (event) => Bot.log.debug("mutIwa reconnecting", { event: event }));
+Bot.on('shardDisconnect', (event) => Bot.log.debug("mutIwa disconnected", event));
+Bot.on('shardReconnecting', (event) => Bot.log.debug("mutIwa reconnecting", event));
 Bot.on('shardResume', async () => await ready());
 Bot.once('shardReady', async () => {
     await ready();

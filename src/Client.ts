@@ -11,7 +11,7 @@ export default new class Bot extends Client {
     public constructor() {
         super({
             retryLimit: 5,
-            intents: [Intents.FLAGS.GUILDS]
+            intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES]
         });
     }
 
@@ -26,8 +26,6 @@ export default new class Bot extends Client {
 
         for (const channel of guild.channels.cache) {
             if (!channel[1].isThread() && !channel[1].isVoice()) {
-                console.log(channel[1].name)
-
                 if (channel[1].name.startsWith('ticket') || channel[1].id === '897900124452290580') {
                     await channel[1].permissionOverwrites.edit(iwa, { SEND_MESSAGES: null, SEND_MESSAGES_IN_THREADS: null })
                         .catch(err => this.log.error(`error while changing perms in ${channel[1].name} (${channel[1].id})`, err));
