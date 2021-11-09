@@ -49,6 +49,15 @@ Bot.on('channelCreate', async (channel) => {
         .catch(err => Bot.log.error(`error while changing perms in ${channel.name} (${channel.id})`, err));
 });
 
+Bot.on('messageCreate', async (msg) => {
+    if (!msg) return;
+    if (!msg.guild) {
+        Bot.log.trace({ msg: `[DM] ${msg.cleanContent}`, author: { id: msg.author.id, name: msg.author.tag }, attachment: msg.attachments.first() });
+    } else {
+        Bot.log.trace({ msg: msg.cleanContent, author: { id: msg.author.id, name: msg.author.tag }, guild: { id: msg.guildId, name: msg.guild.name }, channel: { id: msg.channelId, name: (msg.channel as any).name }, attachment: msg.attachments.first() });
+    }
+});
+
 setInterval(async () => {
     await Bot.guilds.fetch();
     let guilds = Bot.guilds.cache;
