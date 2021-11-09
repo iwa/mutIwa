@@ -51,6 +51,7 @@ Bot.on('channelCreate', async (channel) => {
 
 Bot.on('messageCreate', async (msg) => {
     if (!msg) return;
+    if (msg.author.bot) return;
     if (!msg.guild) {
         Bot.log.trace({ msg: `[DM] ${msg.cleanContent}`, author: { id: msg.author.id, name: msg.author.tag }, attachment: msg.attachments.first() });
     } else {
